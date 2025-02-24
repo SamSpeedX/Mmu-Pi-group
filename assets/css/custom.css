@@ -1,0 +1,25 @@
+#marchant {
+    display: none;
+}
+
+#nidaa, #tini {
+    display: none;
+}
+
+select {
+    color: #fff;
+    width: 100%; 
+    height: 3rem; 
+    background-color: transparent;
+}
+
+select option {
+    color: #000;
+}
+
+#iterm-no {
+    border-radius: 0.7rem;
+    padding: 0.2rem;
+    color: white;
+    background-color: rgb(86, 86, 119);
+}
