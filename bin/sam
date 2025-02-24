@@ -1,0 +1,62 @@
+#!/usr/bin/env php
+<?php
+
+use function Safe\file_put_contents;
+
+$commands = [
+    'make:Controller' => 'Create a new controller',
+    'serve' => 'Start the PHP development server',
+    'help' => 'Lists available command',
+    'dev' => 'Developer Contact'
+];
+
+$command = $argv[1] ?? 'help';
+
+switch ($command) {
+    case 'make:controller':
+        createController($argv[2]);
+        break;
+    
+    case 'serve':
+        StartServer();
+        break;
+
+    case 'dev':
+        dev();
+        break;
+    
+    case 'help':
+    default:
+        showHelp();
+        break;
+}
+
+function createController($name) {
+    if (!$name) {
+        echo "Please specify a controller name.\n";
+        return;
+    }
+    $date = date('H:i:s');
+    $filname = "app/Controller/{$name}Controller.php";
+    $template = "<?php\n\nclass {$name}Controller extends Controller {\n public function index() {\n echo \"Hello from {$name}Controller!\";\n\ }\n }\n";
+    file_put_contents($filname, $template);
+    echo "Controller {$name} created at {$date}";
+}
+
+function dev () {
+    echo "Whatsapp +255780771116";
+}
+
+function StartServer() {
+    echo "Start Development server at http://localhost:8080\n";
+    exec("php -S localhost:8080 -t public");
+}
+
+function showHelp() {
+    global $commands;
+    echo "Sam CLI - Available commands:\n";
+    foreach($commands as $cmd => $desc) {
+        echo "$cmd - $desc\n";
+    }
+}
+?>
