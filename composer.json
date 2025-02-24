@@ -1,0 +1,17 @@
+{
+    "name": "kibalanga/kibalanga-framework",
+    "discription": "Simple php framework developed by Sam Technology",
+    "bin": [
+        "sam.php"
+    ],
+    "autoload": {
+        "psr-4": {
+            "kibalanga\\": ""
+        }
+    },
+    "scripts": {
+        "post-install-cmd": [
+            "php install.php"
+        ]
+    }
+}
