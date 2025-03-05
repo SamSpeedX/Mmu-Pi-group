@@ -23,3 +23,40 @@ select option {
     color: white;
     background-color: rgb(86, 86, 119);
 }
+
+.product123 {
+    height: 16rem;
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+}
+
+.error-text {
+    display: none;
+    color: white;
+    position: fixed;
+    z-index: 100;
+    top: 2rem;
+    right: 3rem;
+    padding: 1rem;
+    border-bottom: 1px solid green;
+    border-radius: 0.8rem;
+    border-top-right-radius: 0;
+    background-color: green;
+  }
+
+  .error-text2 {
+    display: none;
+    color: white;
+    position: fixed;
+    z-index: 100;
+    top: 6rem;
+    right: 1rem;
+    padding: 1rem;
+    border-bottom: 1px solid green;
+    border-radius: 0.8rem;
+    border-top-right-radius: 0;
+    background-color: green;
+  }

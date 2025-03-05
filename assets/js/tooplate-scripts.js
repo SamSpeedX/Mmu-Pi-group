@@ -71,6 +71,93 @@ function drawLineChart() {
   }
 }
 
+// function drawBarChart() {
+//   if ($("#barChart").length) {
+//     ctxBar = document.getElementById("barChart").getContext("2d");
+
+//     optionsBar = {
+//       responsive: true,
+//       scales: {
+//         yAxes: [
+//           {
+//             barPercentage: 0.2,
+//             ticks: {
+//               beginAtZero: true
+//             },
+//             scaleLabel: {
+//               display: true,
+//               labelString: "Product"
+//             }
+//           }
+//         ]
+//       }
+//     };
+
+//     optionsBar.maintainAspectRatio =
+//       $(window).width() < width_threshold ? false : true;
+
+//     /**
+//      * COLOR CODES
+//      * Red: #F7604D
+//      * Aqua: #4ED6B8
+//      * Green: #A8D582
+//      * Yellow: #D7D768
+//      * Purple: #9D66CC
+//      * Orange: #DB9C3F
+//      * Blue: #3889FC
+//      */
+
+//     // const myHeaders = new Headers();
+//     // myHeaders.append("Cookie", "PHPSESSID=2ojor396ea65ho1p5o2rje7nr3");
+
+//     // const requestOptions = {
+//     //   method: "GET",
+//     //   headers: myHeaders,
+//     //   redirect: "follow"
+//     // };
+
+//     fetch("http://localhost:8080/views/merchant/get-product.php", {
+//       headers: {
+//         "Content-Type": "application/json"
+//       }
+//     })
+//     .then((response) => response.json())
+//     .then((data) => {
+//       const lable = data.majina;
+//       const total = data.idadi;
+//       alert(lable);
+
+//       configBar = {
+//         type: "horizontalBar",
+//         data: {
+//           labels: lable, //["Soxs", "Shuka", "fagio", "pazia", "mkanda", "Tshit"],
+//           datasets: [
+//             {
+//               // label: "# prouct",
+//               data: total,//[40, 28, 49, 58, 38, 100],
+//               backgroundColor: [
+//                 "#F7604D",
+//                 "#4ED6B8",
+//                 "#A8D582",
+//                 "#D7D768",
+//                 "#9D66CC",
+//                 "#DB9C3F",
+//                 "#3889FC"
+//               ],
+//               borderWidth: 0
+//             }
+//           ]
+//         },
+//         options: optionsBar
+//       };
+//       barChart = new Chart(ctxBar, configBar);
+//     })
+//     .catch((error) => {
+//       console.log(error);
+//     })
+//   }
+// }
+
 function drawBarChart() {
   if ($("#barChart").length) {
     ctxBar = document.getElementById("barChart").getContext("2d");
@@ -86,7 +173,7 @@ function drawBarChart() {
             },
             scaleLabel: {
               display: true,
-              labelString: "Product"
+              labelString: "Product Stock"
             }
           }
         ]
@@ -96,48 +183,148 @@ function drawBarChart() {
     optionsBar.maintainAspectRatio =
       $(window).width() < width_threshold ? false : true;
 
-    /**
-     * COLOR CODES
-     * Red: #F7604D
-     * Aqua: #4ED6B8
-     * Green: #A8D582
-     * Yellow: #D7D768
-     * Purple: #9D66CC
-     * Orange: #DB9C3F
-     * Blue: #3889FC
-     */
-
-    fetch("http://localhost:8080/get-product", {})
-    .then((response) => response.json())
-    .then((data) => {
-      const lable = data.majina;
-      const total = data.idadi;
+    fetch("http://localhost:8080/views/merchant/get-product.php", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json"
+      }
     })
-    configBar = {
-      type: "horizontalBar",
-      data: {
-        labels: ["Soxs", "Shuka", "fagio", "pazia", "mkanda", "Tshit"],
-        datasets: [
-          {
-            label: "# prouct",
-            data: [40, 28, 49, 58, 38, 100],
-            backgroundColor: [
-              // "#F7604D",
-              "#4ED6B8",
-              "#A8D582",
-              "#D7D768",
-              "#9D66CC",
-              "#DB9C3F",
-              "#3889FC"
-            ],
-            borderWidth: 0
-          }
-        ]
-      },
-      options: optionsBar
-    };
+      .then(response => response.json())
+      .then(data => {
+        const labels = Array.isArray(data.majina) ? data.majina : [data.majina];
+        const totals = Array.isArray(data.idadi) ? data.idadi : [data.idadi];
 
-    barChart = new Chart(ctxBar, configBar);
+        configBar = {
+          type: "pie",//"horizontalBar",
+          data: {
+            labels: labels, 
+            datasets: [
+              {
+                data: totals,
+                backgroundColor: [
+                  "#F7604D",
+                  "#4ED6B8",
+                  "#A8D582",
+                  "#D7D768",
+                  "#9D66CC",
+                  "#DB9C3F",
+                  "#3889FC",
+                  "#F7604D",
+                  "#4ED6B8",
+                  "#A8D582",
+                  "#D7D768",
+                  "#9D66CC",
+                  "#DB9C3F",
+                  "#F7604D",
+                  "#4ED6B8",
+                  "#A8D582",
+                  "#D7D768",
+                  "#9D66CC",
+                  "#DB9C3F",
+                  "#F7604D",
+                  "#4ED6B8",
+                  "#A8D582",
+                  "#D7D768",
+                  "#9D66CC",
+                  "#DB9C3F",
+                  "#F7604D",
+                  "#4ED6B8",
+                  "#A8D582",
+                  "#D7D768",
+                  "#9D66CC",
+                  "#DB9C3F",
+                  "#F7604D",
+                  "#4ED6B8",
+                  "#A8D582",
+                  "#D7D768",
+                  "#9D66CC",
+                  "#DB9C3F",
+                  "#F7604D",
+                  "#4ED6B8",
+                  "#A8D582",
+                  "#D7D768",
+                  "#9D66CC",
+                  "#DB9C3F",
+                  "#F7604D",
+                  "#4ED6B8",
+                  "#A8D582",
+                  "#D7D768",
+                  "#9D66CC",
+                  "#DB9C3F",
+                  "#F7604D",
+                  "#4ED6B8",
+                  "#A8D582",
+                  "#D7D768",
+                  "#9D66CC",
+                  "#DB9C3F",
+                  "#F7604D",
+                  "#4ED6B8",
+                  "#A8D582",
+                  "#D7D768",
+                  "#9D66CC",
+                  "#DB9C3F",
+                  "#F7604D",
+                  "#4ED6B8",
+                  "#A8D582",
+                  "#D7D768",
+                  "#9D66CC",
+                  "#DB9C3F",
+                  "#F7604D",
+                  "#4ED6B8",
+                  "#A8D582",
+                  "#D7D768",
+                  "#9D66CC",
+                  "#DB9C3F",
+                  "#F7604D",
+                  "#4ED6B8",
+                  "#A8D582",
+                  "#D7D768",
+                  "#9D66CC",
+                  "#DB9C3F",
+                  "#F7604D",
+                  "#4ED6B8",
+                  "#A8D582",
+                  "#D7D768",
+                  "#9D66CC",
+                  "#DB9C3F",
+                  "#F7604D",
+                  "#4ED6B8",
+                  "#A8D582",
+                  "#D7D768",
+                  "#9D66CC",
+                  "#DB9C3F",
+                  "#F7604D",
+                  "#4ED6B8",
+                  "#A8D582",
+                  "#D7D768",
+                  "#9D66CC",
+                  "#DB9C3F",
+                  "#F7604D",
+                  "#4ED6B8",
+                  "#A8D582",
+                  "#D7D768",
+                  "#9D66CC",
+                  "#DB9C3F",
+                  "#F7604D",
+                  "#4ED6B8",
+                  "#A8D582",
+                  "#D7D768",
+                  "#9D66CC",
+                  "#DB9C3F"
+                ],
+                borderWidth: 0
+              }
+            ]
+          },
+          options: optionsBar
+        };
+
+        // Initialize the chart
+        barChart = new Chart(ctxBar, configBar);
+      })
+      .catch(error => {
+        console.error("Error fetching data:", error);
+      });
   }
 }
 
