@@ -13,5 +13,8 @@
         "post-install-cmd": [
             "php install.php"
         ]
+    },
+    "require": {
+        "google/apiclient": "^2.0"
     }
 }

@@ -11,6 +11,11 @@ class App
        return Model::App_Key();
     }
 
+    public static function key($key)
+    {
+        return Model::key($key);
+    }
+
     public static function security($token)
     {
         Model::keyCheck($token);

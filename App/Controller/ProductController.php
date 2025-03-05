@@ -35,6 +35,8 @@ class ProductController
         $Product = new Product();
         $upload = new Upload();
         
+        $token = $_SESSION['token'];
+        
         $name = $request["name"]; 
         $description = $request["description"]; 
         $price = $request["price"];
@@ -47,7 +49,7 @@ class ProductController
         if ($response["success"]) {
             $img = $response["file_path"]; // Get uploaded file path
 
-            $result = $Product->create($name, $description, $price, $img, $category, $date, $total);
+            $result = $Product->create($name, $description, $price, $img, $category, $date, $total, $token);
 
             if ($result['status'] === 'success') {
                 Redirect::to("/marchant/products"); // Redirect to home on success

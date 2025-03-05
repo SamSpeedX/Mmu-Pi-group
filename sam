@@ -421,14 +421,14 @@ function StartServer() {
     echo '
 ----------------------------------------------------->
 |
-|  Start Development server at http://localhost:8080
+|  Start Development server at http://127.0.0.1:8000
 |
 ----------------------------------------------------->
 ';
-    $linkL = "xdg-open http://localhost:8080";
-    $linkW = "start http://localhost:8080";
-    $linkM = "open http://localhost:8080";
-    
+    $linkL = "xdg-open http://127.0.0.1:8000";
+    $linkW = "start http://127.0.0.1:8000";
+    $linkM = "open http://127.0.0.1:8000";
+    exec("php -S 127.0.0.1:8000");
     if (PHP_OS_FAMILY === "Linux") {
         exec($linkL);
     } elseif (PHP_OS_FAMILY === "Windows") {
@@ -436,7 +436,7 @@ function StartServer() {
     } elseif (PHP_OS_FAMILY === "Darwin") {
         exec($linkM);
     }
-    exec("php -S localhost:8080");
+    // exec("php -S 127.0.0.1:8000");
 }
 
 function showHelp() {

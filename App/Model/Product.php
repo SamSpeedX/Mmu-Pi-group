@@ -31,7 +31,7 @@ class Product
         return $result["message"] ?? "An error occurred";
     }
 
-    public function create($name, $description, $price, $img, $category, $date, $total)
+    public function create($name, $description, $price, $img, $category, $date, $total, $token)
     {
         $sql = "CREATE TABLE IF NOT EXISTS `products` (
             `id` INT NOT NULL AUTO_INCREMENT , 
@@ -60,7 +60,7 @@ class Product
         
         if ($result1["status"] !== "success") {
             $sql = "INSERT INTO `products` (name, description, price, img, category, date, total, token, created_at) VALUES (:name, :description, :price, :img, :category, :date, :total, :token, :created_at)";
-            $token = uniqid('product_') . bin2hex(random_bytes(4));
+            // $token = uniqid('product_') . bin2hex(random_bytes(4));
             $parameter = [
                 ':name' => $name, 
                 ':description' => $description, 

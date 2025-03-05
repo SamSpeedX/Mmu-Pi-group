@@ -12,6 +12,7 @@ class Database
     private $db_name;
     private $username;
     private $password;
+    private $port;
     private $conn;
 
     public function __construct() {
@@ -19,9 +20,10 @@ class Database
         $this->db_name = DB_NAME;
         $this->username = DB_USER;
         $this->password = DB_PASSWORD;
+        $this->port = DB_PORT;
     }
 
-    public static function getInstance() {
+    public static function getInstance(): mixed {
         if (self::$instance === null) {
             self::$instance = new Database();
         }
@@ -33,7 +35,7 @@ class Database
             try {
                 if (DATABASE == 'mysql') {
                     $this->conn = new PDO(
-                        "mysql:host=" . $this->host . ";dbname=" . $this->db_name,
+                        "mysql:host=" . $this->host . ";port=" . $this->port . ";dbname=" . $this->db_name,
                         $this->username,
                         $this->password
                     );

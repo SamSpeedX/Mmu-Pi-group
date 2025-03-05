@@ -38,7 +38,7 @@ class Api
         curl_setopt($curl, CURLOPT_CUSTOMREQUEST, 'GET');
         curl_setopt($curl, CURLOPT_HTTPHEADER, [
             'Content-Type: application/json',
-            "app_key: {$key},",
+            "app_key: {$key}",
         ]);
 
         $code = curl_getinfo($curl, CURLINFO_HTTP_CODE);

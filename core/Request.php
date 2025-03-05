@@ -23,21 +23,21 @@ class Request
         return $response;
     }
 
-    // public static function productP($rows)
-    // {
-    //     $sql = "SELECT * FROM `products` GROUP BY name LIMIT :limit";
-    //     $parameter = [':limit' => $rows];
-    //     $response = Model::somazote($sql, $parameter);
-    //     return $response;
-    // }
+    public static function ReadWhereToken($table, $token)
+    {
+        $sql = "SELECT * FROM `$table` WHERE token=:token";
+        $parameter = [':token' => $token];
+        $response = Model::somazote($sql, $parameter);
+        return $response;
+    }
 
-    // public static function productP(int $rows)
-    // {
-    //     $sql = "SELECT * FROM `products` GROUP BY name LIMIT ?";
-    //     $parameter = [$rows];
-    //     $response = Model::somazote($sql, $parameter);
-    //     return $response;
-    // }
+    public static function ReadOneWhereToken($table, $token)
+    {
+        $sql = "SELECT * FROM `$table` WHERE token=:token";
+        $parameter = [':token' => $token];
+        $response = Model::moja($sql, $parameter);
+        return $response;
+    }
 
     public static function productP(int $rows)
 {
@@ -54,5 +54,29 @@ class Request
         $parameter = [':limit' => $rowNo];
         $response = Model::somazote($sql, $parameter);
         return $response;
+    }
+
+    public static function FindWhereName($table, $name) {
+        $sql = "SELECT * FROM `$table` WHERE name=:name";
+        $parameter = [":name" => $name];
+        return Model::somazote($sql, $parameter);
+    }
+
+    public static function FindWhereId($table, $id) {
+        $sql = "SELECT * FROM `$table` WHERE id=:name";
+        $parameter = [":name" => $id];
+        return Model::somazote($sql, $parameter);
+    }
+
+    public static function FindWhereCategory($table, $category) {
+        $sql = "SELECT * FROM `$table` WHERE category=:name";
+        $parameter = [":name" => $category];
+        return Model::somazote($sql, $parameter);
+    }
+
+    public static function readAllCategory($table) {
+        $sql = "SELECT * FROM `$table` GROUP BY category LIMIT 5";
+        $parameter = [];
+        return Model::somazote($sql, $parameter);
     }
 }

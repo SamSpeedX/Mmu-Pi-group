@@ -50,6 +50,13 @@ class Model
         }
     }
 
+    public static function key($key)
+    {
+        if ($key !== APP_KEY) {
+            return ['status' => 'error', 'message' => "Page Expire Invalid key!"];
+        }
+    }
+
     public static function keyCheck($token)
     {
         $kibalanga = self::sqlite();

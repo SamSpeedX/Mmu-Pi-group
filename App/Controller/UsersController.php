@@ -5,7 +5,7 @@ use kibalanga\core\Redirect;
 use kibalanga\App\Model\User;
 use kibalanga\core\Upload;
 
-class UserController
+class UsersController
 {
     // 
     public function index($request)
@@ -33,94 +33,6 @@ class UserController
 
     }
 
-    public function login($request)
-    {
-        $user = new User();
-
-        $email = $request['email'];
-        $password = $request["password"];
-
-        // $recaptcha_secret = CAPTCHASITE;
-        // $recaptcha_response = $_POST["g-recaptcha-response"];
-    
-        // $verify_url = "https://www.google.com/recaptcha/api/siteverify?secret={$recaptcha_secret}&response={$recaptcha_response}";
-    
-        // $response = file_get_contents($verify_url);
-        // $response_data = json_decode($response, true);
-    
-        // if (!$response_data["success"]) {
-        //     return "reCAPTCHA verification failed!";
-        // }
-
-        $result = $user->login($email, $password);
-        // echo json_encode($result);
-        if ($result['status'] == 'success') {
-            // process your session
-            $_SESSION['token'] = $result['id'];
-            $_SESSION['role'] = $result['role'];
-            echo "success";
-        } else {
-            // error message.
-            $message = $result['message'];
-            echo $message;
-        }
-    }
-
-    public function register($request)
-    {
-        $user = new User();
-
-        $name = $request['username'];
-        $email = $request['email'];
-        $password = $request['password'];
-        $address = $request['address'];
-        $key = $request['key'];
-        $role = $request['role'];
-
-        if ($role == null) {
-            $role = 'buyer';
-        }
-
-        // $recaptcha_secret = CAPTCHASITE;
-        // $recaptcha_response = $_POST["g-recaptcha-response"];
-    
-        // $verify_url = "https://www.google.com/recaptcha/api/siteverify?secret={$recaptcha_secret}&response={$recaptcha_response}";
-    
-        // $response = file_get_contents($verify_url);
-        // $response_data = json_decode($response, true);
-    
-        // if (!$response_data["success"]) {
-        //     echo "reCAPTCHA verification failed!";
-        // }
-
-        if ($role == 'marchant') {
-            $account = $role;
-            $bname = $request['bname'];
-            $country = $request['country'];
-            $nida = $request['nida'];
-            $tin = $request['tin'];
-            $location = $request['location'];
-
-            $resulti = $user->b($key, $name, $email, $password, $address, $account, $bname, $country, $nida, $tin, $location);
-
-            if ($resulti['status'] == 'success') {
-                echo "success";
-            } else {
-                $message = $resulti['message'];
-                echo $message;
-            }
-        }
-        
-        $result = $user->create($key, $name, $email, $password, $address, $role);
-
-        if ($result['status'] == 'success') {
-            echo "success";
-        } else {
-            $message = $result['message'];
-            echo $message;
-        }
-    }
-
     public function deleP($request)
     {
         $user = new User();
@@ -129,7 +41,8 @@ class UserController
         $result = $user->deletep($key, $id);
 
         if ($result['status'] == 'success') {
-            Redirect::to('/marchant/accounts');
+            // Redirect::to("/boss/edit_user?token=$id");
+            echo "success";
         } elseif (isset($result['message'])) {
             return $result['message'];
         }
@@ -139,17 +52,16 @@ class UserController
     {
         $user = new User();
         $upload = new Upload();
-        
-        // Handle image upload
         $response = $upload->profile($_FILES['file']);
     
         if ($response["success"]) {
-            $img = $response["file_path"]; // Get uploaded file path
-            $token = $_SESSION['token'];
+            $img = $response["file_path"];
+            $token = $request['token'];
             $result = $user->profile($img, $token);
 
             if ($result['status'] == 'success') {
-                Redirect::to('/marchant');
+                // Redirect::to("/boss/edit_user?token=$token");
+                echo "success";
             } elseif (!isset($result['message'])) {
                 echo $result['message'];
             }
@@ -217,7 +129,7 @@ class UserController
                 $user = new User();
                 $jibu = $user->googlePlus(APP_KEY, $google_id, $name, $email, $img);
 
-                // echo json_encode($jibu); 
+                // echo json_encode($jibu);
 
                 if ($jibu['status'] == 'success') {
                     // Redirect::to('/google');
