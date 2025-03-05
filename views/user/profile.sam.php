@@ -2,6 +2,10 @@
 
 use kibalanga\core\Redirect;
 use kibalanga\core\Request;
+use kibalanga\storage\Session;
+// i
+
+Session::profile();
 
 $id = $_SESSION['token'];
 
@@ -123,7 +127,7 @@ if ($ssd['status'] == 'fail' || $ssd['status'] == 'error') {
           <div class="tm-block-col tm-col-account-settings">
             <div class="tm-bg-primary-dark tm-block tm-block-settings">
               <h2 class="tm-block-title">Account Settings</h2>
-              <form action="badili_data" class="tm-signup-form row">
+              <form action="badili_data" class="tm-signup-form row" method="POST">
                 <div class="form-group col-lg-6">
                   <label for="name">Account Name</label>
                   <input
@@ -182,13 +186,13 @@ if ($ssd['status'] == 'fail' || $ssd['status'] == 'error') {
                   </button>
                 </div>
                 <div class="col-12">
-                  <button
-                    type="submit"
+                  <a href="delete_user?token=<?php echo $id; ?>">
+                  <p
                     class="btn btn-primary btn-block text-uppercase"
-                    onclick="window.location.href='delete_user?id=<?php echo $id; ?>'"
                   >
-                    Delete Your Account
-                  </button>
+                    Delete Your Account.
+                  </p>
+                  </a>
                 </div>
               </form>
             </div>

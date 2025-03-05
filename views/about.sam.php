@@ -1,37 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
-
   <head>
-
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
     <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900&display=swap" rel="stylesheet">
-
-    <title>About <?php echo APP_NAME; ?></title>
-
-    <!-- Bootstrap core CSS -->
+    <title>About us | <?php echo APP_NAME; ?></title>
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-<!--
-
-TemplateMo 546 Sixteen Clothing
-
-https://templatemo.com/tm-546-sixteen-clothing
-
--->
-
-    <!-- Additional CSS Files -->
     <link rel="stylesheet" href="assets/css/fontawesome.css">
     <link rel="stylesheet" href="assets/css/templatemo-sixteen.css">
     <link rel="stylesheet" href="assets/css/owl.css">
     <link rel="stylesheet" href="assets/css/custom.css">
-
   </head>
-
   <body>
-
-    <!-- ***** Preloader Start ***** -->
     <div id="preloader">
         <div class="jumper">
             <div></div>
@@ -39,13 +21,10 @@ https://templatemo.com/tm-546-sixteen-clothing
             <div></div>
         </div>
     </div>  
-    <!-- ***** Preloader End ***** -->
-
-    <!-- Header -->
     <header class="">
       <nav class="navbar navbar-expand-lg">
         <div class="container">
-          <a class="navbar-brand" href="/"><h2><?php echo APP_NAME; ?> <em>Tz</em></h2></a>
+          <a class="navbar-brand" href="/"><h2><?php echo APP_NAME; ?> <em>.</em></h2></a>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
@@ -83,7 +62,6 @@ https://templatemo.com/tm-546-sixteen-clothing
       </nav>
     </header>
 
-    <!-- Page Content -->
     <div class="page-heading about-heading header-text">
       <div class="container">
         <div class="row">
@@ -115,11 +93,14 @@ https://templatemo.com/tm-546-sixteen-clothing
             <div class="left-content">
               <h4>Who we are &amp; What we do?</h4>
               <p>
-                This Platform developed by Sam Technology Developer to simplify bussnes of second hand in TANZANIA Our plan is to make Digital TANZANIA. <br> <br> We allow all people to buy and sell in our platform for free. Our platform allow online payments.
+                This Platform developed by Sam Technology Developer to simplify the online Bussness through online coins like Pi in TANZANIA Our plan is to make Digital TANZANIA. <br> <br> Our platform allow online payments We accept Pi, Card and Mobile network Payments.
               </p>
               <p>
-                About Sam Technology is Group of Software Developer that work togather to perform Deferent Task as a Team Work. <br> <br> Current everyone work from home we don't have Office yet, We are looking for support.
+                About Sam Technology is Group of Software Developer that work togather to perform Deferent Task as a Team Work. <br> <br> Current everyone work from home we don't have Office yet, We are looking for support. <a href="developersuport">Support Developer</a>
               </p>
+              <P>
+                <?php echo htmlspecialchars(APP_NAME); ?><?php echo htmlspecialchars('- '.SLOGAN); ?>
+              </P>
               <ul class="social-icons">
                 <li><a href="https://facebook.com/samochuu"><i class="fa fa-facebook"></i></a></li>
                 <li><a href="https://wa.me/+255780771116"><i class="fa fa-whatsapp"></i></a></li>
@@ -144,7 +125,31 @@ https://templatemo.com/tm-546-sixteen-clothing
           <div class="col-md-4">
             <div class="team-member">
               <div class="thumb-container">
-                <img src="assets/images/ceo1.jpg" alt="">
+                <img src="assets/images/team_03.jpg" alt="">
+                <div class="hover-effect">
+                  <div class="hover-content">
+                    <ul class="social-icons">
+                      <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                      <!-- <li><a href="#"><i class="fa fa-twitter"></i></a></li> -->
+                      <!-- <li><a href="#"><i class="fa fa-linkedin"></i></a></li> -->
+                      <!-- <li><a href="#"><i class="fa fa-behance"></i></a></li> -->
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div class="down-content">
+                <h4>Omenda</h4>
+                <span>Founder</span>
+                <p>
+                  Hi is Founder of <?php echo htmlspecialchars(APP_NAME); ?> Platform.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="team-member">
+              <div class="thumb-container">
+                <img src="assets/images/ceo1.jpg" height="250rem" alt="">
                 <div class="hover-effect">
                   <div class="hover-content">
                     <ul class="social-icons">
@@ -157,10 +162,10 @@ https://templatemo.com/tm-546-sixteen-clothing
                 </div>
               </div>
               <div class="down-content">
-                <h4>Sam Ochu</h4>
-                <span>CO-Founder</span>
+                <h4>CHIKIRA</h4>
+                <span>Software Developer</span>
                 <p>
-                  He is Halfstack developer from TANZANIA. Live in dodoma.
+                  He is Halfstack developer from Dodoma TANZANIA.
                 </p>
               </div>
             </div>
@@ -181,111 +186,18 @@ https://templatemo.com/tm-546-sixteen-clothing
                 </div>
               </div>
               <div class="down-content">
-                <h4>Karry Pitcher</h4>
-                <span>Product Expert</span>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing itaque corporis nulla.</p>
+                <h4>Lattifa</h4>
+                <span>Secretary</span>
+                <p>Our company Secretary She from Dodoma TANZANIA.</p>
               </div>
             </div>
           </div>
-          <div class="col-md-4">
-            <div class="team-member">
-              <div class="thumb-container">
-                <img src="assets/images/team_03.jpg" alt="">
-                <div class="hover-effect">
-                  <div class="hover-content">
-                    <ul class="social-icons">
-                      <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                      <!-- <li><a href="#"><i class="fa fa-twitter"></i></a></li> -->
-                      <!-- <li><a href="#"><i class="fa fa-linkedin"></i></a></li> -->
-                      <!-- <li><a href="#"><i class="fa fa-behance"></i></a></li> -->
-                    </ul>
-                  </div>
-                </div>
-              </div>
-              <div class="down-content">
-                <h4>Respicius</h4>
-                <span>Chief Marketing</span>
-                <p>
-                  Lorem ipsum dolor sit amet, consectetur adipisicing itaque corporis nulla.
-
-                </p>
-              </div>
-            </div>
-          </div>
-          <!-- <div class="col-md-4">
-            <div class="team-member">
-              <div class="thumb-container">
-                <img src="assets/images/team_04.jpg" alt="">
-                <div class="hover-effect">
-                  <div class="hover-content">
-                    <ul class="social-icons">
-                      <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                      <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                      <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
-                      <li><a href="#"><i class="fa fa-behance"></i></a></li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-              <div class="down-content">
-                <h4>Mary Cool</h4>
-                <span>Product Specialist</span>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing itaque corporis nulla.
-
-                </p>
-              </div>
-            </div>
-          </div> -->
-          <!-- <div class="col-md-4">
-            <div class="team-member">
-              <div class="thumb-container">
-                <img src="assets/images/team_05.jpg" alt="">
-                <div class="hover-effect">
-                  <div class="hover-content">
-                    <ul class="social-icons">
-                      <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                      <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                      <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
-                      <li><a href="#"><i class="fa fa-behance"></i></a></li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-              <div class="down-content">
-                <h4>George Walker</h4>
-                <span>Product Photographer</span>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing itaque corporis nulla.</p>
-              </div>
-            </div>
-          </div> -->
-          <!-- <div class="col-md-4">
-            <div class="team-member">
-              <div class="thumb-container">
-                <img src="assets/images/team_06.jpg" alt="">
-                <div class="hover-effect">
-                  <div class="hover-content">
-                    <ul class="social-icons">
-                      <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                      <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                      <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
-                      <li><a href="#"><i class="fa fa-behance"></i></a></li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-              <div class="down-content">
-                <h4>Kate Town</h4>
-                <span>General Manager</span>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing itaque corporis nulla.</p>
-              </div>
-            </div>
-          </div> -->
         </div>
       </div>
     </div>
 
 
-    <div class="services">
+    <!-- <div class="services">
       <div class="container">
         <div class="row">
           <div class="col-md-4">
@@ -326,10 +238,10 @@ https://templatemo.com/tm-546-sixteen-clothing
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
 
 
-    <div class="happy-clients">
+    <!-- <div class="happy-clients">
       <div class="container">
         <div class="row">
           <div class="col-md-12">
@@ -366,7 +278,7 @@ https://templatemo.com/tm-546-sixteen-clothing
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
 
     
     <footer>
@@ -374,9 +286,10 @@ https://templatemo.com/tm-546-sixteen-clothing
         <div class="row">
           <div class="col-md-12">
             <div class="inner-content">
-              <p>Copyright &copy; 2020 Sixteen Clothing Co., Ltd.
-            
-            - Design: <a rel="nofollow noopener" href="https://templatemo.com" target="_blank">TemplateMo</a></p>
+              <p>
+              - Developed by: <a rel="nofollow noopener" href="" target="_blank"><?= htmlspecialchars(DEV); ?></a>
+              </p>
+              <p>Copyright &copy; <?= htmlspecialchars(date('Y'). " ". APP_NAME); ?>.</p>
             </div>
           </div>
         </div>

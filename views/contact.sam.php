@@ -249,9 +249,10 @@ https://templatemo.com/tm-546-sixteen-clothing
         <div class="row">
           <div class="col-md-12">
             <div class="inner-content">
-              <p>Copyright &copy; 2020 Sixteen Clothing Co., Ltd.
-            
-            - Design: <a rel="nofollow noopener" href="https://templatemo.com" target="_blank">TemplateMo</a></p>
+              <p>
+              - Developed by: <a rel="nofollow noopener" href="" target="_blank"><?= htmlspecialchars(DEV); ?></a>
+              </p>
+              <p>Copyright &copy; <?= htmlspecialchars(date('Y'). " ". APP_NAME); ?>.</p>
             </div>
           </div>
         </div>

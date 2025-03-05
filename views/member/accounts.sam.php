@@ -1,15 +1,14 @@
 <?php
 
 use kibalanga\core\Request;
-// use kibalanga\storage\Session;
+use kibalanga\storage\Session;
 
-// Session::profile();
-
+Session::Admin();
 $id = $_SESSION['token'];
 
 $data = Request::read('profiles', ['token' => $id]);
 
-if ($data['status'] !== 'success') {
+if ($data['status'] == 'fail') {
   $image = "public/profile/profile_user.jpg";
 } else {
   $response = $data['data'];
@@ -30,22 +29,28 @@ $phone = $response['address'];
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Accounts | <?php echo htmlspecialchars(APP_NAME); ?></title>
+    <title>Accounts - <?php echo htmlspecialchars(APP_NAME); ?></title>
     <link
       rel="stylesheet"
       href="https://fonts.googleapis.com/css?family=Roboto:400,700"
     />
+    <!-- https://fonts.google.com/specimen/Roboto -->
     <link rel="stylesheet" href="/assets/css/fontawesome.min.css" />
+    <!-- https://fontawesome.com/ -->
     <link rel="stylesheet" href="/assets/css/bootstrap.min.css" />
+    <!-- https://getbootstrap.com/ -->
     <link rel="stylesheet" href="/assets/css/templatemo-style.css">
-
+    <!--
+	Product Admin CSS Template
+	https://templatemo.com/tm-524-product-admin
+	-->
   </head>
 
   <body id="reportsPage">
     <div class="" id="home">
       <nav class="navbar navbar-expand-xl">
         <div class="container h-100">
-          <a class="navbar-brand" href="/marchant">
+          <a class="navbar-brand" href="/boss">
             <h1 class="tm-site-title mb-0">Profile</h1>
           </a>
           <button
@@ -63,26 +68,26 @@ $phone = $response['address'];
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mx-auto h-100">
               <li class="nav-item">
-                <a class="nav-link" href="/marchant">
+                <a class="nav-link" href="/boss">
                   <i class="fas fa-tachometer-alt"></i> Dashboard
                   <span class="sr-only">(current)</span>
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="/marchant/products">
+                <a class="nav-link" href="/boss/products">
                   <i class="fas fa-shopping-cart"></i> Products
                 </a>
               </li>
 
               <li class="nav-item">
-                <a class="nav-link active" href="/marchant/accounts">
+                <a class="nav-link active" href="/boss/accounts">
                   <i class="far fa-user"></i> Accounts
                 </a>
               </li>
             </ul>
             <ul class="navbar-nav">
               <li class="nav-item">
-                <a class="nav-link d-block" href="/">
+                <a class="nav-link d-block" href="/home">
                  <b>Go Market</b>
                 </a>
               </li>
@@ -169,7 +174,7 @@ $phone = $response['address'];
                   <input
                     id="address"
                     name="address"
-                    type="tel"
+                    type="text"
                     class="form-control validate"
                     value="<?= htmlspecialchars($phone); ?>"
                   />
@@ -185,7 +190,6 @@ $phone = $response['address'];
                 </div>
                 <div class="col-12">
                   <button
-                    type="submit"
                     class="btn btn-primary btn-block text-uppercase"
                   >
                     Delete Your Account

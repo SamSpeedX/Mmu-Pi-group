@@ -1,50 +1,54 @@
 <?php
 
 use kibalanga\core\Request;
+use kibalanga\storage\Session;
 
-$respo_cata = Request::readAll('products');
+Session::check();
 
-if ($respo_cata['status'] == 'fail' || $respo_cata['status'] == 'error') {
-  // echo json_encode($respo_cata);
-  $sam = "Develeper";
+$get = $_GET['category'] ?? '';
+if ($get && $get !== 'all') {
+  $k = htmlspecialchars($_GET['category']);
+  $jb = Request::FindWhereCategory('products', $k);
+
+  if ($jb['status'] == 'success') {
+    $product = $jb['data'];
+  } else {
+    $product = '';
+    $message = "Sorry We dont have product yet for this category choose another category";
+  }
+} else {
+  $respo_cata = Request::readAll('products');
+  if ($respo_cata['status'] == 'success') {
+    $product = $respo_cata['data']; 
+  } else {
+    $product = "";
+  }
 }
 
-if ($respo_cata['status'] == 'success') {
-  $product = $respo_cata['data']; 
-  // echo json_encode($product);
+$ka = Request::readAll('categories');
+// echo json_encode($ka);
+if ($ka['status'] == 'success') {
+  $kategori = $ka['data'];
+} else {
+  $kategori = "";
 }
 ?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
-
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900&display=swap" rel="stylesheet">
-
-    <title><?php echo APP_NAME; ?></title>
-
-    <!-- Bootstrap core CSS -->
+    <!-- <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900&display=swap" rel="stylesheet"> -->
+    <title>Products | <?php echo APP_NAME; ?></title>
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-<!--
-
-TemplateMo 546 Sixteen Clothing
-
-https://templatemo.com/tm-546-sixteen-clothing
-
--->
-
-    <!-- Additional CSS Files -->
     <link rel="stylesheet" href="assets/css/fontawesome.css">
     <link rel="stylesheet" href="assets/css/templatemo-sixteen.css">
     <link rel="stylesheet" href="assets/css/owl.css">
     <link rel="stylesheet" href="assets/css/custom.css">
-
   </head>
   <body>
-    <!-- ***** Preloader Start ***** -->
     <div id="preloader">
         <div class="jumper">
             <div></div>
@@ -52,12 +56,10 @@ https://templatemo.com/tm-546-sixteen-clothing
             <div></div>
         </div>
     </div>  
-    <!-- ***** Preloader End ***** -->
-    <!-- Header -->
     <header class="">
       <nav class="navbar navbar-expand-lg">
         <div class="container">
-          <a class="navbar-brand" href="/"><h2><?php echo APP_NAME; ?>  <em>Tz</em></h2></a>
+          <a class="navbar-brand" href="/"><h2><?php echo APP_NAME; ?>  <em>.</em></h2></a>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
@@ -95,7 +97,6 @@ https://templatemo.com/tm-546-sixteen-clothing
         </div>
       </nav>
     </header>
-    <!-- Page Content -->
     <div class="page-heading products-heading header-text">
       <div class="container">
         <div class="row">
@@ -108,14 +109,19 @@ https://templatemo.com/tm-546-sixteen-clothing
         </div>
       </div>
     </div>
-    <div class="products">
+    <div class="products"   id="products">
       <div class="container">
         <div class="row">
           <div class="col-md-12">
             <div class="filters">
               <ul>
-                  <li class="active" data-filter="*">All Products</li>
-                  <li data-filter=".gra">Last Minute</li>
+                <li>Select Product Category</li><br>
+                <select id="category" style="color: black; width: 20rem;">
+                  <option value="all" selected>All Category</option>
+                  <?php if ($kategori) { foreach ($kategori as $kategor) { ?>
+                    <option value="<?php echo htmlspecialchars($kategor['name']); ?>"><?php echo htmlspecialchars($kategor['name']); ?></option>
+                  <?php } }  ?>
+                </select>
               </ul>
             </div>
           </div>
@@ -123,134 +129,31 @@ https://templatemo.com/tm-546-sixteen-clothing
           <?php if ($product) { foreach ($product as $b) {?>
           <div class="col-md-4">
             <div class="product-item">
-              <a href="#"><img src="<?php echo htmlspecialchars($b['img']) ?>" alt=""></a>
-              <div class="down-content">
+              <a href="#"><img src="<?php echo htmlspecialchars($b['img']) ?>" alt="product" class="product123"></a>
+              <div class="down-content kat">
                 <a href="#"><h4><?php echo htmlspecialchars($b['name']) ?></h4></a>
                 <h6>Pi <?php echo htmlspecialchars($b['price']) ?>/=</h6>
                 <p>
                   <?php echo htmlspecialchars($b['description']) ?>
                 </p>
-                <button>Buy Now</button>
+                <form action="#" enctype="multipart/form-data" class="form" autocomplete="off">
+                 <p class="error-text2" id="error"></p>
+                  <input type="hidden" value="<?php echo htmlspecialchars($b['name']); ?>" name="name" id="name">
+                  <input type="hidden" value="<?php echo htmlspecialchars($b['description']); ?>" name="description" id="description">
+                  <input type="hidden" value="<?php echo htmlspecialchars($b['price']); ?>" name="price" class="product-price" id="price">
+                  <input type="hidden" name="sellar" id="sellar" value="<?php echo htmlspecialchars($b['token']); ?>">
+                <button type="submit" name="submit" class="btn-buy">Buy Now</button>
+                </form>
               </div>
             </div>
           </div>
           <?php } } else { ?>
-            <p>No procuct yet boss wait please we will post soon.</p>
+            <?php if (isset($message)) { ?>
+              <p><?php echo htmlspecialchars($message); ?></p>
+            <?php } else {?>
+              <p>No procuct yet boss wait please we will post soon.</p>
+            <?php } ?>
           <?php } ?>
-
-
-          <!-- <div class="col-md-12">
-            <div class="filters-content">
-                <div class="row grid">
-
-                <?php if (!empty($product)) { 
-  foreach ($product as $pro) { ?>
-    <div class="col-lg-4 col-md-4 all des product-item" data-id="<?= htmlspecialchars($pro['id']); ?>">
-      <div class="product-content">
-        <a href="#"><img src="<?= htmlspecialchars($pro['img']); ?>" alt=""></a>
-        <div class="down-content">
-          <a href="#"><h4><?= htmlspecialchars($pro['name']); ?></h4></a>
-          <h6>Pi <span class="product-price"><?= htmlspecialchars($pro['price']); ?></span></h6>
-          <p><?= htmlspecialchars($pro['description']); ?></p>
-          <button class="btn-buy">Buy Now</button>
-        </div>
-      </div>
-    </div>
-<?php } } else { ?>
-  <div>No product yet!</div>
-<?php } ?>
-
-
-
-
-                  <?php if (!empty($product)) { 
-                  foreach ($product as $pro) { ?>
-                    <!-- <div class="col-lg-4 col-md-4 all des">
-                      <div class="product-item">
-                        <a href="#"><img src="<?= htmlspecialchars($pro['img']); ?>" alt=""></a>
-                        <div class="down-content">
-                          <a href="#"><h4><?= htmlspecialchars($pro['name']); ?></h4></a>
-                          <h6>Pi <?= htmlspecialchars($pro['price']); ?></h6>
-                          <p><?= htmlspecialchars($pro['description']); ?></p>
-                          <form action="#" class="form"><input type="text" name="" value="<?= htmlspecialchars($pro['img']); ?>" id="<?= htmlspecialchars($pro['img']); ?>">
-                          <button onclick="add();" type="submit">Buy now</button></form>
-                        </div>
-                      </div>
-                    </div> -->
-                    <?php } } else { ?>
-                      <div>No product yet!</div>
-                    <?php }  ?> 
-                    <!-- <div class="col-lg-4 col-md-4 all dev">
-                      <div class="product-item">
-                        <a href="#"><img src="assets/images/product_02.jpg" alt=""></a>
-                        <div class="down-content">
-                          <a href="#"><h4>Tittle goes here</h4></a>
-                          <h6>$16.75</h6>
-                          <p>Lorem ipsume dolor sit amet, adipisicing elite. Itaque, corporis nulla aspernatur.</p>
-                          <button>Buy now</button>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-lg-4 col-md-4 all gra">
-                      <div class="product-item">
-                        <a href="#"><img src="assets/images/product_03.jpg" alt=""></a>
-                        <div class="down-content">
-                          <a href="#"><h4>Tittle goes here</h4></a>
-                          <h6>$32.50</h6>
-                          <p>Lorem ipsume dolor sit amet, adipisicing elite. Itaque, corporis nulla aspernatur.</p>
-                          <button>Buy now</button>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-lg-4 col-md-4 all gra">
-                      <div class="product-item">
-                        <a href="#"><img src="assets/images/product_04.jpg" alt=""></a>
-                        <div class="down-content">
-                          <a href="#"><h4>Tittle goes here</h4></a>
-                          <h6>$24.60</h6>
-                          <p>Lorem ipsume dolor sit amet, adipisicing elite. Itaque, corporis nulla aspernatur.</p>
-                          <button>Buy now</button>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-lg-4 col-md-4 all dev">
-                      <div class="product-item">
-                        <a href="#"><img src="assets/images/product_05.jpg" alt=""></a>
-                        <div class="down-content">
-                          <a href="#"><h4>Tittle goes here</h4></a>
-                          <h6>$18.75</h6>
-                          <p>Lorem ipsume dolor sit amet, adipisicing elite. Itaque, corporis nulla aspernatur.</p>
-                          <button>Buy now</button>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="col-lg-4 col-md-4 all des">
-                      <div class="product-item">
-                        <a href="#"><img src="assets/images/product_06.jpg" alt=""></a>
-                        <div class="down-content">
-                          <a href="#"><h4>Tittle goes here</h4></a>
-                          <h6>$12.50</h6>
-                          <p>Lorem ipsume dolor sit amet, adipisicing elite. Itaque, corporis nulla aspernatur.</p>
-                          <button>Buy now</button>
-                        </div>
-                      </div>
-                    </div> -->
-
-                </div>
-            </div>
-          </div> 
-          <!-- <div class="col-md-12">
-            <ul class="pages">
-              <li><a href="#">1</a></li>
-              <li class="active"><a href="#">2</a></li>
-              <li><a href="#">3</a></li>
-              <li><a href="#">4</a></li>
-              <li><a href="#"><i class="fa fa-angle-double-right"></i></a></li>
-            </ul>
-          </div> -->
-
-
         </div>
       </div>
     </div>
@@ -271,10 +174,19 @@ https://templatemo.com/tm-546-sixteen-clothing
       </div>
     </footer>
 
-    <!-- Bootstrap core JavaScript -->
+    <script>
+      const category = document.getElementById("category");
+      category.onchange = () => {
+        if (category.value == 'all') {
+          window.location.href=`products?#products`;
+        }
+        window.location.href=`products?category=${category.value}#products`;
+      }
+    </script>
+    <!-- <script src="assets/js/addcart.js"></script> -->
+    <script src="assets/js/cats.js"></script>
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <!-- Additional Scripts -->
     <script src="assets/js/custom.js"></script>
     <script src="assets/js/owl.js"></script>
     <script src="assets/js/slick.js"></script>
@@ -290,109 +202,6 @@ https://templatemo.com/tm-546-sixteen-clothing
           t.style.color='#fff';
           }
       }
-
-      // const form = document.querySelector(".form");
-      // form.addEventListener(() => {
-      //   e.preventDefault();
-      //   alert('prevented')
-      // });
-
-      document.addEventListener("DOMContentLoaded", function () {
-    let cartCountElement = document.getElementById("iterm-no");
-
-    document.querySelectorAll(".btn-buy").forEach((button) => {
-        button.addEventListener("click", function () {
-            let product = this.closest(".col-lg-4"); // Adjusted selector
-            if (!product) return; // Safety check
-
-            let productData = {
-                id: product.getAttribute("data-id"),
-                img: product.querySelector("img").src,
-                name: product.querySelector("h4").textContent.trim(),
-                price: parseFloat(product.querySelector(".product-price").textContent) || 0,
-                quantity: 1 // Always add 1 item
-            };
-
-            // Send AJAX request to add product to cart
-            fetch("views/add_to_cart.php", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(productData)
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.status === "success") {
-                    alert("✅ " + productData.name + " added to cart!");
-
-                    // Update cart count dynamically
-                    if (cartCountElement) {
-                        let currentCount = parseInt(cartCountElement.textContent) || 0;
-                        cartCountElement.textContent = currentCount + 1;
-                    }
-                } else {
-                    alert("❌ Failed to add product to cart.");
-                }
-            })
-            .catch(error => console.error("Error:", error));
-        });
-    });
-});
-
-
-//       document.addEventListener("DOMContentLoaded", function () {
-//     // Select all product containers
-//     document.querySelectorAll(".product-item").forEach((product) => {
-//         let priceElement = product.querySelector(".product-price");
-//         let quantityInput = product.querySelector(".product-quantity");
-//         let totalElement = product.querySelector(".price");
-
-//         // Increase Quantity
-//         product.querySelector(".btn-increase").addEventListener("click", function () {
-//             quantityInput.value = parseInt(quantityInput.value) + 1;
-//             updatePrice();
-//         });
-
-//         // Decrease Quantity
-//         product.querySelector(".btn-decrease").addEventListener("click", function () {
-//             if (quantityInput.value > 1) {
-//                 quantityInput.value = parseInt(quantityInput.value) - 1;
-//                 updatePrice();
-//             }
-//         });
-
-//         // Update Price Function
-//         function updatePrice() {
-//             let unitPrice = parseFloat(priceElement.textContent);
-//             let quantity = parseInt(quantityInput.value);
-//             let newTotal = unitPrice * quantity;
-//             totalElement.textContent = newTotal;
-//         }
-
-//         // AJAX "Buy Now" Button
-//         product.querySelector(".btn-buy").addEventListener("click", function () {
-//             let productData = {
-//                 id: product.getAttribute("data-id"),
-//                 img: product.querySelector("img").src,
-//                 name: product.querySelector("h4").textContent,
-//                 price: totalElement.textContent,
-//                 quantity: quantityInput.value
-//             };
-
-//             // Send AJAX Request
-//             let xhr = new XMLHttpRequest();
-//             xhr.open("POST", "add_to_cart.php", true);
-//             xhr.setRequestHeader("Content-Type", "application/json");
-            
-//             xhr.onreadystatechange = function () {
-//                 if (xhr.readyState === 4 && xhr.status === 200) {
-//                     alert("Added to cart: " + productData.name);
-//                 }
-//             };
-
-//             xhr.send(JSON.stringify(productData));
-//         });
-//     });
-// });
 
 </script>
 

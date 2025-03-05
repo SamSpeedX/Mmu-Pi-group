@@ -1,18 +1,28 @@
 <?php
 
 use kibalanga\core\Request;
-// $id = htmlspecialchars($_GET['token']);
+
+$id = htmlspecialchars($_GET['token']);
+
 if (isset($_GET['token'])) {
   $id = htmlspecialchars($_GET['token']);
 } else {
   $id = null;
 }
-$response = Request::read('products', ['token' => $id]);
 
-if ($response['status'] == 'fail') {
-  $count_cart = 0;
-} else {
+$response = Request::read('products', ['token' => $id]);
+if ($response['status'] == 'success') {
   $data = $response['data'];
+} else {
+  $data = "";
+}
+
+$r = Request::readAll("categories");
+
+if ($r['status'] == 'success') {
+  $category = $r['data'];
+} else {
+  $category = '';
 }
 ?>
 <!DOCTYPE html>
@@ -21,7 +31,7 @@ if ($response['status'] == 'fail') {
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Edit Product | <?= htmlspecialchars(APP_NAME) ?></title>
+    <title>Edit Product | <?php echo htmlspecialchars(APP_NAME) ?></title>
     <link
       rel="stylesheet"
       href="https://fonts.googleapis.com/css?family=Roboto:400,700"
@@ -43,7 +53,7 @@ if ($response['status'] == 'fail') {
   <body>
     <nav class="navbar navbar-expand-xl">
       <div class="container h-100">
-        <a class="navbar-brand" href="index.html">
+        <a class="navbar-brand" href="/boss">
           <h1 class="tm-site-title mb-0">Product Admin</h1>
         </a>
         <button
@@ -61,20 +71,20 @@ if ($response['status'] == 'fail') {
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav mx-auto h-100">
             <li class="nav-item">
-              <a class="nav-link" href="/marchant">
+              <a class="nav-link" href="/boss">
                 <i class="fas fa-tachometer-alt"></i> Dashboard
                 <span class="sr-only">(current)</span>
               </a>
             </li>
             
             <li class="nav-item">
-              <a class="nav-link active" href="/marchant/products">
+              <a class="nav-link active" href="/boss/products">
                 <i class="fas fa-shopping-cart"></i> Products
               </a>
             </li>
 
             <li class="nav-item">
-              <a class="nav-link" href="/marchant/accounts">
+              <a class="nav-link" href="/boss/accounts">
                 <i class="far fa-user"></i> Accounts
               </a>
             </li>
@@ -155,10 +165,9 @@ if ($response['status'] == 'fail') {
                       class="custom-select tm-select-accounts"
                       id="category"
                     >
-                      <option option="<?= htmlspecialchars($data['category']); ?>"><?= htmlspecialchars($data['category']); ?></option>
-                      <option value="1" selected>New Arrival</option>
-                      <option value="2">Most Popular</option>
-                      <option value="3">Trending</option>
+                    <?php foreach ($category as $datas) { ?>
+                      <option value="<?= htmlspecialchars($datas['name']); ?>"><?= htmlspecialchars($datas['name']); ?></option>
+                      <?php } ?>
                     </select>
                   </div>
                   <div class="row">

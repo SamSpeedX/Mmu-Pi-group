@@ -29,7 +29,7 @@
     <header class="">
       <nav class="navbar navbar-expand-lg">
         <div class="container">
-          <a class="navbar-brand" href=""><h2><?php echo APP_NAME; ?> <em>Tz</em></h2></a>
+          <a class="navbar-brand" href="/"><h2><?php echo APP_NAME; ?> <em></em></h2></a>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
@@ -45,7 +45,7 @@
               <li class="nav-item">
                 <a class="nav-link" href="about">About Us</a>
               </li>
-              <?php if (!isset($_SESSION['uid'])) {?>
+              <?php if (!isset($_SESSION['token'])) {?>
               <li class="nav-item">
                 <a class="nav-link" href="login">Login</a>
               </li>
@@ -128,49 +128,6 @@
           </div>
         </div>
 
-        <div class="card rounded-3 mb-4">
-          <div class="card-body p-4">
-            <div class="row d-flex justify-content-between align-items-center">
-              <div class="col-md-2 col-lg-2 col-xl-2">
-                <img
-                  src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-shopping-carts/img1.webp"
-                  class="img-fluid rounded-3" alt="Cotton T-shirt">
-              </div>
-              <div class="col-md-3 col-lg-3 col-xl-3">
-                <p class="lead fw-normal mb-2">Basic T-shirt</p>
-              </div>
-              <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
-                <button class="btn btn-link px-2 decrement">
-                  <i class="fa fa-minus"></i>
-                </button>
-        
-                <input id="form1" min="0" name="quantity" value="1" type="number"
-                  class="form-control form-control-sm quantity" data-price="<?= htmlspecialchars(2000) ?>" />
-        
-                <button class="btn btn-link px-2 increment">
-                  <i class="fa fa-plus"></i>
-                </button>
-              </div>
-              <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
-                <h5 class="mb-0"><span class="price">2000</span></h5>
-              </div>
-              <div class="col-md-1 col-lg-1 col-xl-1 text-end">
-                <a href="#!" class="text-danger"><i class="fa fa-trash fa-lg"></i></a>
-              </div>
-            </div>
-          </div>
-        </div>
-        <!-- <script>
-  function updatePrice(button, step, unitPrice) {
-    let row = button.closest('.row');
-    let quantityInput = row.querySelector('input[type=number]');
-    let priceElement = row.querySelector('.price');
-
-    quantityInput.value = Math.max(0, parseInt(quantityInput.value) + step);
-    priceElement.innerHTML = quantityInput.value * unitPrice;
-  }
-</script> -->
-
 <script>
 document.addEventListener("DOMContentLoaded", function () {
     const cartItem = document.querySelector('.card-body');
@@ -203,155 +160,7 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 </script>
 
-
-        <!-- <div class="card rounded-3 mb-4">
-          <div class="card-body p-4">
-            <div class="row d-flex justify-content-between align-items-center">
-              <div class="col-md-2 col-lg-2 col-xl-2">
-                <img
-                  src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-shopping-carts/img1.webp"
-                  class="img-fluid rounded-3" alt="Cotton T-shirt">
-              </div>
-              <div class="col-md-3 col-lg-3 col-xl-3">
-                <p class="lead fw-normal mb-2">Basic T-shirt</p>
-              </div>
-              <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
-                <button data-mdb-button-init data-mdb-ripple-init class="btn btn-link px-2"
-                  onclick="this.parentNode.querySelector('input[type=number]').stepDown();
-                 let p = this.parentNode.querySelector('input[type=number]').value * <?= htmlspecialchars(2000) ?> - <?= htmlspecialchars(2000) ?>;
-                 document.getElementById('price').innerHTML=p">
-                  <i class="fa fa-minus"></i>
-                </button>
-
-                <input id="form1" min="0" name="quantity" value="1" type="number"
-                  class="form-control form-control-sm" />
-
-                <button data-mdb-button-init data-mdb-ripple-init class="btn btn-link px-2"
-                  onclick="this.parentNode.querySelector('input[type=number]').stepUp();
-                  document.getElementById('price').innerHTML  = this.parentNode.querySelector('input[type=number]').value * <?= htmlspecialchars(2000) ?>">
-                  <i class="fa fa-plus"></i>
-                </button>
-              </div>
-              <script>if (p == 0) {let p = <?= htmlspecialchars(2000); ?>; document.getElementById('price').innerHTML=p}</script>
-              <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
-                <h5 class="mb-0"><span id="price">2000</span></h5>
-              </div>
-              <div class="col-md-1 col-lg-1 col-xl-1 text-end">
-                <a href="#!" class="text-danger"><i class="fa fa-trash fa-lg"></i></a>
-              </div>
-            </div>
-          </div>
-        </div> -->
-
-        <!-- <div class="card rounded-3 mb-4">
-          <div class="card-body p-4">
-            <div class="row d-flex justify-content-between align-items-center">
-              <div class="col-md-2 col-lg-2 col-xl-2">
-                <img
-                  src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-shopping-carts/img1.webp"
-                  class="img-fluid rounded-3" alt="Cotton T-shirt">
-              </div>
-              <div class="col-md-3 col-lg-3 col-xl-3">
-                <p class="lead fw-normal mb-2">Basic T-shirt</p>
-                <p><span class="text-muted">Size: </span>M <span class="text-muted">Color: </span>Grey</p>
-              </div>
-              <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
-                <button data-mdb-button-init data-mdb-ripple-init class="btn btn-link px-2"
-                  onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
-                  <i class="fa fa-minus"></i>
-                </button>
-
-                <input id="form1" min="0" name="quantity" value="2" type="number"
-                  class="form-control form-control-sm" />
-
-                <button data-mdb-button-init data-mdb-ripple-init class="btn btn-link px-2"
-                  onclick="this.parentNode.querySelector('input[type=number]').stepUp()">
-                  <i class="fa fa-plus"></i>
-                </button>
-              </div>
-              <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
-                <h5 class="mb-0">$499.00</h5>
-              </div>
-              <div class="col-md-1 col-lg-1 col-xl-1 text-end">
-                <a href="#!" class="text-danger"><i class="fa fa-trash fa-lg"></i></a>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="card rounded-3 mb-4">
-          <div class="card-body p-4">
-            <div class="row d-flex justify-content-between align-items-center">
-              <div class="col-md-2 col-lg-2 col-xl-2">
-                <img
-                  src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-shopping-carts/img1.webp"
-                  class="img-fluid rounded-3" alt="Cotton T-shirt">
-              </div>
-              <div class="col-md-3 col-lg-3 col-xl-3">
-                <p class="lead fw-normal mb-2">Basic T-shirt</p>
-                <p><span class="text-muted">Size: </span>M <span class="text-muted">Color: </span>Grey</p>
-              </div>
-              <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
-                <button data-mdb-button-init data-mdb-ripple-init class="btn btn-link px-2"
-                  onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
-                  <i class="fa fa-minus"></i>
-                </button>
-
-                <input id="form1" min="0" name="quantity" value="2" type="number"
-                  class="form-control form-control-sm" />
-
-                <button data-mdb-button-init data-mdb-ripple-init class="btn btn-link px-2"
-                  onclick="this.parentNode.querySelector('input[type=number]').stepUp()">
-                  <i class="fa fa-plus"></i>
-                </button>
-              </div>
-              <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
-                <h5 class="mb-0">$499.00</h5>
-              </div>
-              <div class="col-md-1 col-lg-1 col-xl-1 text-end">
-                <a href="#!" class="text-danger"><i class="fa fa-trash fa-lg"></i></a>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="card rounded-3 mb-4">
-          <div class="card-body p-4">
-            <div class="row d-flex justify-content-between align-items-center">
-              <div class="col-md-2 col-lg-2 col-xl-2">
-                <img
-                  src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-shopping-carts/img1.webp"
-                  class="img-fluid rounded-3" alt="Cotton T-shirt">
-              </div>
-              <div class="col-md-3 col-lg-3 col-xl-3">
-                <p class="lead fw-normal mb-2">Basic T-shirt</p>
-                <p><span class="text-muted">Size: </span>M <span class="text-muted">Color: </span>Grey</p>
-              </div>
-              <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
-                <button data-mdb-button-init data-mdb-ripple-init class="btn btn-link px-2"
-                  onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
-                  <i class="fa fa-minus"></i>
-                </button>
-
-                <input id="form1" min="0" name="quantity" value="2" type="number"
-                  class="form-control form-control-sm" />
-
-                <button data-mdb-button-init data-mdb-ripple-init class="btn btn-link px-2"
-                  onclick="this.parentNode.querySelector('input[type=number]').stepUp()">
-                  <i class="fa fa-plus"></i>
-                </button>
-              </div>
-              <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
-                <h5 class="mb-0">$499.00</h5>
-              </div>
-              <div class="col-md-1 col-lg-1 col-xl-1 text-end">
-                <a href="#!" class="text-danger"><i class="fa fa-trash fa-lg"></i></a>
-              </div>
-            </div>
-          </div>
-        </div> -->
-
-        <div class="card mb-4">
+        <!-- <div class="card mb-4">
           <div class="card-body p-4 d-flex flex-row">
             <div data-mdb-input-init class="form-outline flex-fill">
               <input type="text" id="form1" class="form-control form-control-lg" />
@@ -359,7 +168,7 @@ document.addEventListener("DOMContentLoaded", function () {
             </div>
             <button  type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-outline-warning btn-lg ms-3">Apply</button>
           </div>
-        </div>
+        </div> -->
 
         <div class="card mb-4 mb-lg-0">
           <div class="card-body">
@@ -376,7 +185,7 @@ document.addEventListener("DOMContentLoaded", function () {
 <br>
         <div class="card">
           <div class="card-body">
-            <button  type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-warning btn-block btn-lg">Proceed to Pay</button>
+            <button  type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-warning btn-block btn-lg">Place Order</button>
           </div>
         </div>
 
@@ -390,11 +199,10 @@ document.addEventListener("DOMContentLoaded", function () {
         <div class="row">
           <div class="col-md-12">
             <div class="inner-content">
-              <div style="display: flex;">
-                <p><a href="terms" style="color: blue;" target="_blank" rel="noopener noreferrer">Terms and privacy policy of servicess</a></p>
-              </div>
-              - Developed by: <a rel="nofollow noopener" href="https://SamSeedX.github.io/samtechnology" target="_blank"><?php echo DEV; ?></a></p>
-              <p>Copyright &copy; 2025 <?php echo APP_NAME; ?> | Allright reseved.</p>
+              <p>
+              - Developed by: <a rel="nofollow noopener" href="" target="_blank"><?php echo htmlspecialchars(DEV); ?></a>
+              </p>
+              <p>Copyright &copy; <?php echo htmlspecialchars(date('Y'). " ". APP_NAME); ?>.</p>
             </div>
           </div>
         </div>

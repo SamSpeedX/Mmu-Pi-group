@@ -1,5 +1,8 @@
 <?php
-// 
+use kibalanga\storage\Session;
+// i
+
+Session::profile();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -84,13 +87,13 @@
             <div class="row tm-content-row">
                 <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6 tm-block-col">
                     <div class="tm-bg-primary-dark tm-block">
-                        <h2 class="tm-block-title">Latest Hits</h2>
+                        <h2 class="tm-block-title">Orders</h2>
                         <canvas id="lineChart"></canvas>
                     </div>
                 </div>
                 <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6 tm-block-col">
                     <div class="tm-bg-primary-dark tm-block">
-                        <h2 class="tm-block-title">Products</h2>
+                        <h2 class="tm-block-title">Total Products in Stock</h2>
                         <canvas id="barChart"></canvas>
                     </div>
                 </div>
@@ -190,8 +193,8 @@
                                     <th scope="col">ORDER NO.</th>
                                     <th scope="col">STATUS</th>
                                     <th scope="col">OPERATORS</th>
-                                    <th scope="col">LOCATION</th>
-                                    <th scope="col">DISTANCE</th>
+                                    <!-- <th scope="col">LOCATION</th> -->
+                                    <!-- <th scope="col">DISTANCE</th> -->
                                     <th scope="col">START DATE</th>
                                     <th scope="col">EST DELIVERY DUE</th>
                                 </tr>
@@ -204,8 +207,8 @@
                                         </div>Moving
                                     </td>
                                     <td><b>Oliver Trag</b></td>
-                                    <td><b>London, UK</b></td>
-                                    <td><b>485 km</b></td>
+                                    <!-- <td><b>London, UK</b></td> -->
+                                    <!-- <td><b>485 km</b></td> -->
                                     <td>16:00, 12 NOV 2018</td>
                                     <td>08:00, 18 NOV 2018</td>
                                 </tr>
@@ -216,8 +219,8 @@
                                         </div>Pending
                                     </td>
                                     <td><b>Jacob Miller</b></td>
-                                    <td><b>London, UK</b></td>
-                                    <td><b>360 km</b></td>
+                                    <!-- <td><b>London, UK</b></td> -->
+                                    <!-- <td><b>360 km</b></td> -->
                                     <td>11:00, 10 NOV 2018</td>
                                     <td>04:00, 14 NOV 2018</td>
                                 </tr>
@@ -228,8 +231,8 @@
                                         </div>Cancelled
                                     </td>
                                     <td><b>George Wilson</b></td>
-                                    <td><b>London, UK</b></td>
-                                    <td><b>340 km</b></td>
+                                    <!-- <td><b>London, UK</b></td> -->
+                                    <!-- <td><b>340 km</b></td> -->
                                     <td>12:00, 22 NOV 2018</td>
                                     <td>06:00, 28 NOV 2018</td>
                                 </tr>
@@ -240,12 +243,12 @@
                                         </div>Moving
                                     </td>
                                     <td><b>William Aung</b></td>
-                                    <td><b>London, UK</b></td>
-                                    <td><b>218 km</b></td>
+                                    <!-- <td><b>London, UK</b></td> -->
+                                    <!-- <td><b>218 km</b></td> -->
                                     <td>15:00, 10 NOV 2018</td>
                                     <td>09:00, 14 NOV 2018</td>
                                 </tr>
-                                <tr>
+                                <!-- <tr>
                                     <th scope="row"><b>#122345</b></th>
                                     <td>
                                         <div class="tm-status-circle pending">
@@ -328,7 +331,7 @@
                                     <td><b>150 km</b></td>
                                     <td>15:00, 12 OCT 2018</td>
                                     <td>09:20, 26 OCT 2018</td>
-                                </tr>
+                                </tr> -->
                             </tbody>
                         </table>
                     </div>
@@ -343,6 +346,7 @@
             </div>
         </footer>
     </div>
+    <input type="text" id="token" value="<?php echo htmlspecialchars($_SESSION['token']); ?>">
 
     <script src="assets/js/jquery-3.3.1.min.js"></script>
     <!-- https://jquery.com/download/ -->

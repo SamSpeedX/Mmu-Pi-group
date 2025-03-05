@@ -1,5 +1,6 @@
 <?php
 
+use kibalanga\core\Model;
 use kibalanga\core\Request;
 
 if (isset($_SESSION['token'])) {
@@ -7,28 +8,42 @@ if (isset($_SESSION['token'])) {
 } else {
   $id = null;
 }
-$response = Request::read('carts', ['token' => $id]);
 
+$response = Request::read('carts', ['token' => $id]);
 if ($response['status'] == 'fail') {
   $count_cart = 0;
 } else {
-  // echo json_encode($response);
   $data = $response['data'];
   $count_cart = $data['rows'];
 }
 
 $respo_cata = Request::productP(6);
-
 if ($respo_cata['status'] == 'fail' || $respo_cata['status'] == 'error') {
-  echo json_encode($respo_cata);
   $sam = "Develeper";
 }
 
 if ($respo_cata['status'] == 'success') {
   $product = $respo_cata['data']; 
-  // echo json_encode($product);
 } else {
   $product = '';
+}
+
+$sql = "SELECT token FROM `roles` WHERE role=:name";
+$parameter = [':name' => 'member'];
+$jibu = Model::moja($sql, $parameter);
+
+if ($jibu['status'] == 'success') {
+  $data = $jibu['data'];
+  $tokeni = $data['token'];
+} else {
+  $tokeni = "";
+}
+
+$ka = Request::readAll('categories');
+if ($ka['status'] == 'success') {
+  $kategori = $ka['data'];
+} else {
+  $kategori = "";
 }
 ?>
 <!DOCTYPE html>
@@ -39,22 +54,14 @@ if ($respo_cata['status'] == 'success') {
     <meta name="description" content="">
     <meta name="author" content="">
     <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900&display=swap" rel="stylesheet">
-
     <title>welcome | <?php echo APP_NAME ?></title>
-    <!-- Bootstrap core CSS -->
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-<!--
-TemplateMo 546 Sixteen Clothing
-https://templatemo.com/tm-546-sixteen-clothing
--->
-    <!-- Additional CSS Files -->
     <link rel="stylesheet" href="assets/css/fontawesome.css">
     <link rel="stylesheet" href="assets/css/templatemo-sixteen.css">
     <link rel="stylesheet" href="assets/css/owl.css">
     <link rel="stylesheet" href="assets/css/custom.css">
   </head>
   <body>
-    <!-- ***** Preloader Start ***** -->
     <div id="preloader">
         <div class="jumper">
             <div></div>
@@ -62,12 +69,10 @@ https://templatemo.com/tm-546-sixteen-clothing
             <div></div>
         </div>
     </div>  
-    <!-- ***** Preloader End ***** -->
-    <!-- Header -->
     <header class="">
       <nav class="navbar navbar-expand-lg">
         <div class="container">
-          <a class="navbar-brand" href=""><h2><?php echo APP_NAME; ?> <em>Tz</em></h2></a>
+          <a class="navbar-brand" href="/"><h2><?php echo APP_NAME; ?> <em>.</em></h2></a>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
@@ -106,8 +111,6 @@ https://templatemo.com/tm-546-sixteen-clothing
       </nav>
     </header>
 
-    <!-- Page Content -->
-    <!-- Banner Starts Here -->
     <div class="banner header-text">
       <div class="owl-banner owl-carousel">
         <div class="banner-item-01">
@@ -130,7 +133,6 @@ https://templatemo.com/tm-546-sixteen-clothing
         </div>
       </div>
     </div>
-    <!-- Banner Ends Here -->
 
     <div class="latest-products">
       <div class="container">
@@ -144,14 +146,16 @@ https://templatemo.com/tm-546-sixteen-clothing
           <?php if ($product) { foreach ($product as $b) { ?>
           <div class="col-md-4">
             <div class="product-item">
-              <a href="#"><img src="<?php echo htmlspecialchars($b['img']) ?>" alt=""></a>
+              <a href="#"><img src="<?php echo htmlspecialchars($b['img']) ?>" class="product123" alt="product"></a>
               <div class="down-content">
                 <a href="#"><h4><?php echo htmlspecialchars($b['name']) ?></h4></a>
                 <h6>Pi <?php echo htmlspecialchars($b['price']) ?>/=</h6>
                 <p>
                   <?php echo htmlspecialchars($b['description']) ?>
                 </p>
-                <button>Buy Now</button>
+                <form action="/add_cart" method="post" enctype="multipart/form-data" class="form">
+                <button type="submit">Buy Now</button>
+                </form>
               </div>
             </div>
           </div>
@@ -173,14 +177,14 @@ https://templatemo.com/tm-546-sixteen-clothing
           <div class="col-md-6">
             <div class="left-content">
               <h4><?php echo htmlspecialchars(APP_NAME); ?> products</h4>
-              <p><?php echo htmlspecialchars(APP_NAME); ?> is online platform that allow everyone to buy iterms online. Our platform allow online payments.</p>
-              <p>Here are the best products our merchant are selling.</p>
+              <p><?php echo htmlspecialchars(APP_NAME); ?> is online platform that allow everyone to buy iterms online. Our platform allow online payments We accept Pi Dollar and Tsh.</p>
+              <p>Here are the best products category We are selling.</p>
               <ul class="featured-list">
-                <li><a href="#">Clothes</a></li>
-                <li><a href="#">furniture</a></li>
-                <li><a href="#">Motorcycle</a></li>
-                <li><a href="#">Electronics</a></li>
-                <!-- <li><a href="#">Non cum id reprehenderit</a></li> -->
+                <?php if ($kategori) { foreach($kategori as $kategor) {?>
+                  <li><a href="products?category=<?php echo htmlspecialchars($kategor['name']); ?>"><?php echo htmlspecialchars($kategor['name']); ?></a></li>
+                <?php } } else { ?>
+                  <li><a>Sorry We just Open now We have no category yet, Please wait Boss.</a></li>
+                <?php } ?>
               </ul>
               <a href="about" class="filled-button">Read More</a>
             </div>
@@ -209,7 +213,7 @@ https://templatemo.com/tm-546-sixteen-clothing
                   </p>
                 </div>
                 <div class="col-md-4">
-                  <a href="mwanachama" class="filled-button">Register as Member</a>
+                  <a href="/register?token=<?php echo htmlspecialchars($tokeni); ?>" class="filled-button">Register as Member</a>
                 </div>
               </div>
             </div>
@@ -217,15 +221,19 @@ https://templatemo.com/tm-546-sixteen-clothing
         </div>
       </div>
     </div>
-
     
     <footer>
       <div class="container">
         <div class="row">
           <div class="col-md-12">
             <div class="inner-content">
-              <div style="display: flex;">
-                <p><a href="terms" style="color: blue;" target="_blank" rel="noopener noreferrer">Terms and privacy policy of servicess</a></p>
+              <div class="footer-content">
+                <div>
+                  <p>You have problem? <a href="report">Report here.</a></p>
+                </div>
+                <div>
+                  <p><a href="terms" style="color: blue;" target="_blank" rel="noopener noreferrer">Terms and privacy policy of servicess</a></p>
+                </div>
               </div>
               - Developed by: <a rel="nofollow noopener" href="https://SamSeedX.github.io/samtechnology" target="_blank"><?php echo DEV; ?></a></p>
               <p>Power by: Pius Omenda.</p>

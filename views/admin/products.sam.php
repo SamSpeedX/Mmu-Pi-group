@@ -1,20 +1,19 @@
 <?php
 
 use kibalanga\core\Request;
+use kibalanga\storage\Session;
 
-$token = htmlspecialchars($_SESSION['token']);
-$responses = Request::ReadWhereToken("products", $token);
+Session::Admin();
+$token = $_SESSION['token'];
 
+$responses = Request::ReadWhereToken('products', $token);
 if ($responses['status'] == 'success') {
   $result = $responses['data'];
-} else {
-  $result = "";
 }
 
-$response = Request::ReadWhereToken("products", $token);
-
-if ($response['status'] == 'success') {
-  $category = $response['data'];
+$ppp = Request::readAll('categories');
+if ($ppp['status'] == 'success') {
+  $category = $ppp['data'];
 } else {
   $category = "";
 }
@@ -25,7 +24,7 @@ if ($response['status'] == 'success') {
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Product Page - Admin</title>
+    <title>Product Page - <?php echo htmlspecialchars(APP_NAME); ?></title>
     <link
       rel="stylesheet"
       href="https://fonts.googleapis.com/css?family=Roboto:400,700"
@@ -45,8 +44,8 @@ if ($response['status'] == 'success') {
   <body id="reportsPage">
     <nav class="navbar navbar-expand-xl">
       <div class="container h-100">
-        <a class="navbar-brand" href="index.html">
-          <h1 class="tm-site-title mb-0">Product Panel</h1>
+        <a class="navbar-brand" href="/boss">
+          <h1 class="tm-site-title mb-0">Admin Panel</h1>
         </a>
         <button
           class="navbar-toggler ml-auto mr-0"
@@ -63,20 +62,20 @@ if ($response['status'] == 'success') {
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav mx-auto h-100">
             <li class="nav-item">
-              <a class="nav-link" href="/marchant">
+              <a class="nav-link" href="/boss">
                 <i class="fas fa-tachometer-alt"></i> Dashboard
                 <span class="sr-only">(current)</span>
               </a>
             </li>
             <li class="nav-item">
               <a class="nav-link active" href="products">
-                <i class="fas fa-shopping-cart"></i> Products
+                <i class="fas fa-shopping-cart"></i> My Products
               </a>
             </li>
 
             <li class="nav-item">
               <a class="nav-link" href="accounts">
-                <i class="far fa-user"></i> Accounts
+                <i class="far fa-user"></i> My Account
               </a>
             </li>
           </ul>
@@ -89,7 +88,7 @@ if ($response['status'] == 'success') {
           </ul>
           <ul class="navbar-nav">
             <li class="nav-item">
-              <a class="nav-link d-block" href="/logout?out=true">
+              <a class="nav-link d-block" href="logout">
                 <b>Logout</b>
               </a>
             </li>
@@ -102,8 +101,8 @@ if ($response['status'] == 'success') {
         <div class="col-sm-12 col-md-12 col-lg-8 col-xl-8 tm-block-col">
           <div class="tm-bg-primary-dark tm-block tm-block-products">
             <div class="tm-product-table-container">
+              <?php if ($responses['status'] == 'success') { ?>
               <table class="table table-hover tm-table-small tm-product-table">
-                <?php if ($responses['status'] == 'success') { ?>
                 <thead>
                   <tr>
                     <th scope="col">PRODUCT NAME</th>
@@ -135,14 +134,14 @@ if ($response['status'] == 'success') {
                     </td>
                   </tr>
                   <?php } } else { ?>
-                  <p><?= htmlspecialchars($responses['message']); ?></p>
+                  <p><?= htmlspecialchars("No product yet Boss! Please Boss Add product"); ?></p>
                   <?php } ?>
 
                 </tbody>
               </table>
             </div>
             <a
-              href="/marchant/add_product"
+              href="/boss/add_product"
               class="btn btn-primary btn-block text-uppercase mb-3">Add new product</a>
             <button class="btn btn-primary btn-block text-uppercase" onclick="window.location.href='/marchant/delete_all_product?all=true'">
               Delete All
@@ -156,33 +155,26 @@ if ($response['status'] == 'success') {
             <div class="tm-product-table-container">
               <table class="table tm-table-small tm-product-table">
                 <tbody>
-                  <?php if ($category) { foreach($category as $cate) {?>
+                  <?php if ($category) { foreach($category as $cate) { ?>
                     <tr>
-                    <td class="tm-product-name"><?php echo htmlspecialchars($cate['category']); ?></php></td>
+                    <td class="tm-product-name"><?php echo htmlspecialchars($cate['name']); ?></td>
                     <td class="text-center">
                       <a href="#" class="tm-product-delete-link">
                         <i class="far fa-trash-alt tm-product-delete-icon"></i>
                       </a>
                     </td>
                   </tr>
-                  <?php } } else {?>
-                  <p>You don't have any category yet!</p>
+                  <?php } } else { ?>
+                    <tr>
+                      No category yet boss!
+                    </tr>
                   <?php } ?>
-                  <!-- <tr>
-                    <td class="tm-product-name">Product Category 2</td>
-                    <td class="text-center">
-                      <a href="#" class="tm-product-delete-link">
-                        <i class="far fa-trash-alt tm-product-delete-icon"></i>
-                      </a>
-                    </td>
-                  </tr> -->
-
                 </tbody>
               </table>
             </div>
-            <!-- <button class="btn btn-primary btn-block text-uppercase mb-3">
+            <button class="btn btn-primary btn-block text-uppercase mb-3">
               Add new category
-            </button> -->
+            </button>
           </div>
         </div>
 
